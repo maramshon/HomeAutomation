@@ -6,6 +6,7 @@ var db=require('./db/dbConnection');
 var session =require("express-session");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var bcrypt=require("bcrypt-nodejs")
 app.use(function (req, res, next) {
 
    // Website you wish to allow to connect
@@ -36,6 +37,8 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+
+
 
 //scan in bluetooth 
 app.get('/scan',(req,res) =>{
@@ -94,21 +97,18 @@ app.post('/signup',(req,res)=>{
 			res.status(200)
 			return res.send(JSON.stringify("exist"));
 		}
-		//hashing password ....
-		bcrypt.hash(req.bodyParserdy.user.password, null, null, function(err, hash){
-			//else insert it into database
-			// var sql="insert into user (name,password) values ('"+req.body.user.username+"','"+req.body.user.password+"');";
-			var sql="insert into user (name,password,email,image,api) values ('"+req.body.user.username+"','"+hash+"','"+req.body.user.email+"','"+req.body.user.image+"','"+req.body.user.api+"');";
-			db.query(sql,function(err,result){
-				if(err){
-					throw err
-				}
-				res.status(200);
-				return res.send(JSON.stringify("inserted"));
-			})
-		})
 
-		
+		bcrypt.hash(req.body.user.password, null, null, function(err, hash){
+		//else insert it into database
+		var sql="insert into user (name,password) values ('"+req.body.user.username+"','"+hash+"');";
+		db.query(sql,function(err,result){
+			if(err){
+				throw err
+			}
+			res.status(200);
+			return res.send(JSON.stringify("inserted"));
+		})
+		})
 	})
 });
 //login user 
@@ -124,24 +124,31 @@ app.post('/login',(req,res)=>{
 			//check password
 			console.log(req.body.user.password)
 			console.log("resullllt",result[0].password)
+
 			bcrypt.compare(req.body.user.password, result[0].password, function(err, hash){
-				// if(result[0].password==req.body.user.password){
-				if(hash){
-					//create session 
-					req.session.username=result[0].name;
-					req.session.password=result[0].password;
-					console.log("the session is ===> ",req.session)
-					return res.send(JSON.stringify("done"));
-				}else{
-					return res.send(JSON.stringify("not exist"));
-				}
-			})
-			
+
+			if(hash){
+				//create session 
+				req.session.username=result[0].name;
+				req.session.password=result[0].password;
+				console.log("the session is ===> ",req.session)
+				return res.send(JSON.stringify("done"));
+			}else{
+				return res.send(JSON.stringify("not exist"));
+			}
+		})
 
 		}else{
 			return res.send(JSON.stringify("not exist"));
 		}
 	})
+})
+//ligout
+app.get('/logout', function(req,res){
+    req.session.destroy(function(err) {
+      err ? console.log(err) : console.log('deleted')
+      res.send(JSON.stringify("ended"))
+      })
 })
 app.get('/user',(req,res) =>{
 	return res.send(JSON.stringify(req.session.username))
@@ -154,4 +161,3 @@ app.listen(port,(err) =>{
 		throw err
 	console.log('listening on 8000')
 })
-
