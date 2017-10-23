@@ -18,9 +18,21 @@ export default class Profile extends React.Component {
        	name:"",
        	turnon:"",
        	connect:"",
-        logout : ""
+        logout : "",
+        motion:""
        }
     }
+    //detect motion 
+    async motion() {
+        try {
+                 let response = await fetch('http://192.168.2.46:8000/motion');
+                 let responseJson = await response.json();
+                 this.setState({motion:responseJson})
+           } catch(error) {
+             console.error(error);
+             }
+    } 
+    //logout
     async logout() {
         try {
                  let response = await fetch('http://192.168.2.46:8000/logout');
@@ -95,7 +107,11 @@ export default class Profile extends React.Component {
                 />
                  <Button
                     title="Turn off lights"
-                    onPress={() => this.turnoff()}
+                    onPress={() => this.motion()}
+                />
+                 <Button
+                    title="Detect motion in my room"
+                    onPress={() => this.logout()}
                 />
                 <Button
                     title="Log out"
