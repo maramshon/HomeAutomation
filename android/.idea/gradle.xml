@@ -9,6 +9,12 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-android-permissions/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-android-speech" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-android-voice" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-image-picker/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-maps/lib/android" />
+            <option value="$PROJECT_DIR$/../node_modules/react-native-vector-icons/android" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

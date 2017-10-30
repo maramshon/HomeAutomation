@@ -9,8 +9,13 @@ import {
 } from 'react-native';
 import Login from './src/routes/Login';
 import Signup from './src/routes/Signup';
-import Profile from './src/routes/profile';
-import Mape from './src/routes/map';
+import Profile from './src/routes/Profile';
+import Map from './src/routes/map';
+// import Home from './src/routes/Home';
+import MainScreenNavigator from './src/routes/Home';
+import Controle from './src/routes/Controle';
+import ChatBox from './src/routes/ChatBox';
+import Main from './src/routes/Main';
 // export default class App () => {
 //     this.state={component:'Signup'};
 //     render(){
@@ -43,10 +48,8 @@ export default class App extends React.Component {
           return <Signup changeV={this.changestate.bind(this)} />;
       } else if (this.state.component == 'Login') {
           return <Login changeV={this.changestate.bind(this)} />;
-      } else if (this.state.component=='Profile') {
-          return <Profile changeV={this.changestate.bind(this)} />;
-      } else if(this.state.component == 'Mape') {
-          return <Mape changeV={this.changestate.bind(this)} />;
-      }
+      } else if (this.state.component=='Home') {
+          return <MainScreenNavigator changeV={this.changestate.bind(this)} />;
+      } 
   }
 }
