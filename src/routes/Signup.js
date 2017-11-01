@@ -58,7 +58,7 @@ ImagePicker.showImagePicker(options, (response) => {
     }
     async Signup() {
         try {
-            let response = await fetch('http://192.168.2.46:8000/signup', {
+            let response = await fetch('https://home99.herokuapp.com/signup', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

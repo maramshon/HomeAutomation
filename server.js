@@ -1,8 +1,6 @@
-//require express
 var express = require('express');
 var app = express();
-var bluetooth = require('node-bluetooth');
-var db=require('./db/dbConnection');
+var mysql = require('mysql');
 var session =require("express-session");
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -38,91 +36,49 @@ app.use(session({
     saveUninitialized: true
 }));
 
+//database
+
+var connection = mysql.createConnection({
+    host: 'sql11.freemysqlhosting.net',
+    user: 'sql11201967',
+    password: '4qTvU9Rc1T',
+    database: 'sql11201967'
+});
+
+connection.connect(function(err) {
+    if (err) {
+        console.log('errrror');
+    }
+
+     console.log("connection connected")
+    //  var sql =
+    //         'CREATE TABLE user (id INT AUTO_INCREMENT PRIMARY KEY, name varchar(255), password varchar(255), email varchar(200), image varchar(255), api varchar(250))';
+    //     connection.query(sql, function(err, result) {
+    //         if (err) {
+    //             throw err;
+    //         }
+    //         console.log('CREATE TABLE usre');
+    //     });
+
+    //   console.log("connected to connection")
+    //     var sql2 = 
+    //     'CREATE TABLE components (id INT AUTO_INCREMENT PRIMARY KEY, component varchar (200))';
+    //     connection.query(sql2, function(err, result){
+    //         if(err){
+    //             throw err;
+    //         }
+    //         console.log('CREATE TABLE components');
+    //     });
+    });
 
 
 
-//scan in bluetooth 
-app.get('/scan',(req,res) =>{
-	const devices={
-		addresses:[],
-		names:[]
-	};
-	var device = new bluetooth.DeviceINQ();
-	device
-	.on('finisqhed', console.log.bind(console, 'finished'))
-	.on('found',(address,name) =>{
-		devices.addresses.push(address);
-		devices.names.push(name);
-		console.log("address is===> "+address+" the name is===> "+name)
-	}).inquire();
-	res.send(JSON.stringify(devices))
-})
-
-// connect to bluetooth device
-var connect;
-app.get('/connect',(req,res)=>{
-	bluetooth.connect('98-d3-31-b3-12-a1',1,(err,connection)=>{
-		if(err){
-			throw err
-		}else{
-			console.log('connected')
-			connect=connection
-			//connection.write('1', 'utf-8');
-			res.send(JSON.stringify('doneeee'));
-		}
-	})
-})
-
-// handle motion sensor
-app.get('/motion',(req,res) =>{
-	var buf= new Buffer('d', 'utf-8')
-	var x="dd";
-	console.log("motion")
-	connect.write(new Buffer(buf),function(){
-		connect.on('data', (buffer) => {
-		   
-		console.log("hiiiiiii")
-		//console.log(buffer)
-		buf=buffer.toString('utf-8')
-     console.log(buffer.toString('utf-8'));
-    // console.log(str.split('/n', 0, 2))
-    // x=buffer.toString();
-    // res.set('Content-Type', 'text/plain');
-    // res.status(200);
-    // return res.send(JSON.stringify("ffff"))
-    
-    // //return res.send(JSON.stringify(x))
-    // //console.log("the x is===> ",x)
-  });
-	});
-	//setTimeout(function(){}, 2000);
-	
-	//setTimeout(function(){return res.send(JSON.stringify(x))}, 2000);
- 	//return res.send();
- setTimeout(function(){
- 	console.log("hhhhhhh",buf.toString("utf-8")); 
- 	return res.json(buf.toString("utf-8"))
- }, 1000);
-
-})
-//turn on the lights
-app.get('/on',(req,res)=>{
-	connect.write(new Buffer('1', 'utf-8'),function(){});
-	res.send(JSON.stringify('on'))
-})
-
-//turn off the lights 
-app.get('/off',(req,res)=>{
-	connect.write(new Buffer('0', 'utf-8'),function(){});
-
-	res.send(JSON.stringify('off'))
-})
 //signup user
 app.post('/signup',(req,res)=>{
 	console.log("comming data =======>", req.body.user)
 	//checck if user allready exist  
 	var sql="select * from user where name='"+req.body.user.username+"';";
-	db.query(sql,function(err,result){
+	connection.query(sql,function(err,result){
 		if(err){
 			throw err
 		}
@@ -136,7 +92,7 @@ app.post('/signup',(req,res)=>{
 		bcrypt.hash(req.body.user.password, null, null, function(err, hash){
 		//else insert it into database
 		var sql="insert into user (name,password,image) values ('"+req.body.user.username+"','"+hash+"','"+req.body.user.image+"');";
-		db.query(sql,function(err,result){
+		connection.query(sql,function(err,result){
 			if(err){
 				throw err
 			}
@@ -151,7 +107,7 @@ app.post('/login',(req,res)=>{
 	console.log(req.body)
 	//check if username exist
 	var sql="select * from user where name='"+req.body.user.username+"';"
-	db.query(sql,(err,result)=>{
+	connection.query(sql,(err,result)=>{
 		console.log("the result is ====> ",result)
 		if(err)
 			console.log("errrrror")
@@ -188,7 +144,7 @@ app.get('/logout', function(req,res){
 // return user info
 app.get('/user',(req,res) =>{
 	var sql="select * from user where name='"+req.session.username+"';"
-	db.query(sql,(err,result)=>{
+	connection.query(sql,(err,result)=>{
 		if(err){
 			throw err;
 		}
@@ -201,7 +157,7 @@ app.post('/SetNewImage',(req,res) =>{
 	var name=req.body.user.name;
 	var image=req.body.user.image;
 	var sql="update user set image='"+image+"' where name='"+name+"';"
-	db.query(sql,(err,result)=>{
+	connection.query(sql,(err,result)=>{
 		if(err){
 			throw err;
 		}
@@ -213,7 +169,7 @@ app.post('/SetNewImage',(req,res) =>{
 app.post('/SetName',(req,res) =>{
 	var name=req.body.user.name;
 	var sql="update user set name='"+name+"' where name='"+req.session.username+"';"
-	db.query(sql,(err,result)=>{
+	connection.query(sql,(err,result)=>{
 		if(err){
 			throw err;
 		}

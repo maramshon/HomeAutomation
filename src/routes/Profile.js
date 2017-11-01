@@ -35,7 +35,7 @@ export default class Profile extends React.Component {
     //set new name in database 
     async SetName(){
         try {
-            let response = await fetch('http://192.168.2.46:8000/SetName', {
+            let response = await fetch('https://home99.herokuapp.com/SetName', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -77,7 +77,7 @@ export default class Profile extends React.Component {
     //update the new image 
     async SetNewImage() {
         try {
-            let response = await fetch('http://192.168.2.46:8000/SetNewImage', {
+            let response = await fetch('https://home99.herokuapp.com/SetNewImage', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -99,7 +99,7 @@ export default class Profile extends React.Component {
     //logout
     async logout() {
             try {
-                     let response = await fetch('http://192.168.2.46:8000/logout');
+                     let response = await fetch('https://home99.herokuapp.com/logout');
                      let responseJson = await response.json();
                      this.setState({logout:responseJson})
                      return this.props.changeV('Login');
@@ -111,7 +111,7 @@ export default class Profile extends React.Component {
     //fetch user info
     async getCureentUser() {
         try {
-                 let response = await fetch('http://192.168.2.46:8000/user');
+                 let response = await fetch('https://home99.herokuapp.com/user');
                  let responseJson = await response.json();
                  this.setState({image:responseJson.image})
                  this.setState({name:responseJson.name})

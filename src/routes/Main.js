@@ -26,7 +26,7 @@
 //     //logout
 //     async logout() {
 //         try {
-//                  let response = await fetch('http://192.168.2.46:8000/logout');
+//                  let response = await fetch('http://192.168.8.143:8000/logout');
 //                  let responseJson = await response.json();
 //                  this.setState({logout:responseJson})
 //                  // return this.props.changeV('Login');
@@ -37,7 +37,7 @@
 //     //get current user
 //     // async getCureentUser() {
 // 	   //  try {
-// 			 //     let response = await fetch('http://192.168.2.46:8000/user');
+// 			 //     let response = await fetch('http://192.168.8.143:8000/user');
 // 			 //     let responseJson = await response.json();
 // 			 //     this.setState({name:responseJson})
 // 		  //  } catch(error) {

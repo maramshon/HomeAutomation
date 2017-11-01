@@ -33,9 +33,59 @@ export default class Controle extends React.Component {
        	turnon:"",
        	connect:"",
         motion:"",
-        text:""
+        text:"",
+        temp:"",
+        getTemp:this.temp(),
+        autoDetect:this.autoDetect()
        }
     }
+    //motion auto detection
+    autoDetect(){
+        setInterval(async function(){
+            try {
+
+                 let response = await fetch('http://192.168.8.143:8000/motion');
+                 let responseJson = await response.json();
+                 if(responseJson=='y'){
+                    Alert.alert("Warrning there is motion in your room")
+                 }
+           } catch(error) {
+             console.error(error);
+             }
+        },2000);
+    }
+// Read the temperature
+     temp() {
+        var x=this
+        setInterval(async function(){
+            try {
+
+                 let response = await fetch('http://192.168.8.143:8000/temp');
+
+                 let responseJson = await response.json();
+
+                   // Alert.alert(typeof(responseJson));
+
+                  x.setState({temp:responseJson});
+                 //var x=JSON.parse(responseJson)
+                // this.state.temp=responseJson
+
+               //  res=JSON.parse(res)
+
+           } catch(error) {
+
+             console.error(error);
+
+             }
+
+        },10000);
+        
+
+    } 
+
+
+
+
     async speak(){
     try{
         //More Locales will be available upon release.
@@ -45,7 +95,7 @@ export default class Controle extends React.Component {
         this.state.text=spokenText
         var a = this.state.text.search("turn");
         var b = this.state.text.search("on");
-        var c = this.state.text.search("off");
+        var c = this.state.text.search("off");  
         if(a !==-1 && b!==-1){
             tts.speak({
                 text:'your fan turned on', 
@@ -127,7 +177,7 @@ export default class Controle extends React.Component {
     }
     async motion() {
         try {
-                 let response = await fetch('http://192.168.2.46:8000/motion');
+                 let response = await fetch('http://192.168.8.143:8000/motion');
                  let responseJson = await response.json();
                  //responseJson=JSON.parse(responseJson)
                  
@@ -172,7 +222,7 @@ export default class Controle extends React.Component {
     //get current user
     async getCureentUser() {
 	    try {
-			     let response = await fetch('http://192.168.2.46:8000/user');
+			     let response = await fetch('https://home99.herokuapp.com/user');
 			     let responseJson = await response.json();
 			     this.setState({name:responseJson.name})
 		   } catch(error) {
@@ -181,7 +231,7 @@ export default class Controle extends React.Component {
      } 
      async connect(){
     	 try {
-			     let response = await fetch('http://192.168.2.46:8000/connect');
+			     let response = await fetch('http://192.168.8.143:8000/connect');
 			     let responseJson = await response.json();
 			     if(responseJson){
 			     	Alert.alert("Connected")
@@ -193,7 +243,7 @@ export default class Controle extends React.Component {
     }
     async turnon(){
     	 try {
-			     let response = await fetch('http://192.168.2.46:8000/on');
+			     let response = await fetch('http://192.168.8.143:8000/on');
 			     let responseJson = await response.json();
 			   
 		   } catch(error) {
@@ -202,7 +252,7 @@ export default class Controle extends React.Component {
     }
     async turnoff(){
     	 try {
-			     let response = await fetch('http://192.168.2.46:8000/off');
+			     let response = await fetch('http://192.168.8.143:8000/off');
 			     let responseJson = await response.json();
 			    
 		   } catch(error) {
@@ -218,6 +268,7 @@ export default class Controle extends React.Component {
                     style={styles.logo}
                     source={require('./Smart.png')}
                 />
+
             </View>
             <Text style={styles.header}>
                 {' '}
@@ -248,7 +299,7 @@ export default class Controle extends React.Component {
              onPress={() => this.motion()}>
              <Text style={styles.buttonText}>Detect motion in my room</Text>
              </TouchableOpacity> 
-
+                <Text>{this.state.temp}</Text>
              <TouchableOpacity
              style={styles.buttonContainer}
              onPress={() => this.speak()}>
