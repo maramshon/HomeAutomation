@@ -7,20 +7,20 @@ var cookieParser = require('cookie-parser');
 var bcrypt=require("bcrypt-nodejs")
 app.use(function (req, res, next) {
 
-   // Website you wish to allow to connect
+  // Website you wish to allow to connect
    res.setHeader('Access-Control-Allow-Origin', '*');
 
-   // Request methods you wish to allow
+  // Request methods you wish to allow
    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-   // Request headers you wish to allow
+  // Request headers you wish to allow
    res.setHeader('Access-Control-Allow-Headers', '*');
 
-   // Set to true if you need the website to include cookies in the requests sent
+  // Set to true if you need the website to include cookies in the requests sent
    // to the API (e.g. in case you use sessions)
    res.setHeader('Access-Control-Allow-Credentials', true);
 
-   // Pass to next layer of middleware
+  // Pass to next layer of middleware
    next();
 });
 
@@ -38,6 +38,7 @@ app.use(session({
 
 
 
+
 ////////////////////////////
 
 var http = require('http')
@@ -48,46 +49,45 @@ var websocket = socketio(server);
 
 // var connection=require('./connection/connectionConnection');
 
-server.listen(8000, () => console.log('listening on *:8000'));
+server.listen(8000, () => console.log('listening on *:8000 '));
 websocket.on('connection', (socket) => {
-  
-  console.log("user connected ================================");
 
-  var sql="select * from msgT;";
-  connection.query(sql,function(err,result){
-          if(err){
+    console.log("user connected ================================");
+
+    var sql="select * from msgT;";
+    connection.query(sql,function(err,result){
+        if(err){
             throw err
+        }
+        if(result.length>100){
+            
         }
         console.log("query result =====>",result);
         websocket.emit('allDataBase', result);
-  }) 
+    }) 
 
-  socket.on('message', (message) => {
-      // debugger;
+    socket.on('message', (message) => {
       console.log('HHHHHHHHHH ========> ',message);
-      if(!message){
-        return 
-      }
       var sql="insert into msgT (user,text,date) values ('"+message.user+"','"+message.text+"','"+message.date+"');";
-            connection.query(sql,function(err,result){
-                    if(err){
-                        throw err
-                    }
-                })
-      // websocket.emit('msg', message);
-      var sql="select * from msgT;";
       connection.query(sql,function(err,result){
           if(err){
-            throw err
-        }
-        console.log("query result =====>",result);
-        websocket.emit('msg', result);
-  }) 
+              throw err
+          }
+      })
+      
+     var sql="select * from msgT;";
+      connection.query(sql,function(err,result){
+          if(err){
+              throw err
+          }
+          console.log("query result =====>",result);
+          websocket.emit('msg', result);
+      })
   });
 
-  socket.on('disconnect', function(){
-       console.log('user disconnected');
-   });
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
 });
 ////////////////////////////
 //database
@@ -97,8 +97,7 @@ var connection = mysql.createConnection({
     user: 'sql11201967',
     password: '4qTvU9Rc1T',
     database: 'sql11201967'
-});
-
+}); 
 connection.connect(function(err) {
     if (err) {
         console.log('errrror');
@@ -126,8 +125,8 @@ connection.connect(function(err) {
      //        console.log('CREATE TABLE usre');
      //    });
 
-    //   console.log("connected to connection")
-        // var sql2 = 
+   //   console.log("connected to connection")
+        // var sql2 =
         // 'CREATE TABLE components (id INT AUTO_INCREMENT PRIMARY KEY, component varchar (200))';
         // connection.query(sql2, function(err, result){
         //     if(err){
@@ -139,23 +138,24 @@ connection.connect(function(err) {
 
 
 
+
 //signup user
 app.post('/signup',(req,res)=>{
   console.log("comming data =======>", req.body.user)
   //checck if user allready exist  
-  var sql="select * from user where name='"+req.body.user.username+"';";
+ var sql="select * from user where name='"+req.body.user.username+"';";
   connection.query(sql,function(err,result){
     if(err){
       throw err
     }
     console.log("query result =====>",result);
-    // if exist return exist 
+    // if exist return exist
     if(result.length){
       res.status(200)
       return res.send(JSON.stringify("exist"));
     }
 
-    bcrypt.hash(req.body.user.password, null, null, function(err, hash){
+   bcrypt.hash(req.body.user.password, null, null, function(err, hash){
     //else insert it into database
     var sql="insert into user (name,password,image) values ('"+req.body.user.username+"','"+hash+"','"+req.body.user.image+"');";
     connection.query(sql,function(err,result){
@@ -182,10 +182,10 @@ app.post('/login',(req,res)=>{
       console.log(req.body.user.password)
       console.log("resullllt",result[0].password)
 
-      bcrypt.compare(req.body.user.password, result[0].password, function(err, hash){
+     bcrypt.compare(req.body.user.password, result[0].password, function(err, hash){
 
-      if(hash){
-        //create session 
+     if(hash){
+        //create session
         req.session.username=result[0].name;
         req.session.password=result[0].password;
         console.log("the session is ===> ",req.session)
@@ -195,7 +195,7 @@ app.post('/login',(req,res)=>{
       }
     })
 
-    }else{
+   }else{
       return res.send(JSON.stringify("not exist"));
     }
   })
