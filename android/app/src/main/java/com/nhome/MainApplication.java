@@ -3,11 +3,17 @@ package com.nhome;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import im.shimo.react.prompt.RNPromptPackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.mihir.react.tts.*;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-
+import com.airbnb.android.react.maps.MapsPackage;
+import com.wmjmc.reactspeech.VoicePackage;
+import com.imagepicker.ImagePickerPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,9 +28,15 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage()
+          new MainReactPackage(),
+            new RNPromptPackage(),
+            new MapsPackage(),
+            new VoicePackage(),
+            new RCTTextToSpeechModule(),
+            new ImagePickerPackage()
       );
     }
+
 
     @Override
     protected String getJSMainModuleName() {
