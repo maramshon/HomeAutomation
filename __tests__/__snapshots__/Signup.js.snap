@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search snapshot test 1`] = `
+<View
+  keyboardVerticalOffset={0}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#87CEFA",
+        "flex": 1,
+        "justifyContent": "center",
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#87CEFA",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexGrow": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Image
+        source={1}
+        style={
+          Object {
+            "height": 200,
+            "width": 200,
+          }
+        }
+      />
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      disabled={false}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#fff",
+          "fontWeight": "700",
+          "marginTop": 5,
+          "opacity": 0.8,
+          "textAlign": "center",
+        }
+      }
+    >
+       
+      Welcome to the Home Automation System
+    </Text>
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="username"
+      placeholderTextColor="#800080"
+      returnKeyType="next"
+      style={
+        Object {
+          "backgroundColor": "#E0FFFF",
+          "color": "#C71585",
+          "height": 40,
+          "marginBottom": 20,
+          "paddingHorizontal": 10,
+          "textAlign": "center",
+          "width": 200,
+        }
+      }
+      validators="required"
+    />
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="password"
+      placeholderTextColor="#800080"
+      returnKeyType="next"
+      secureTextEntry={true}
+      style={
+        Object {
+          "backgroundColor": "#E0FFFF",
+          "color": "#C71585",
+          "height": 40,
+          "marginBottom": 20,
+          "paddingHorizontal": 10,
+          "textAlign": "center",
+          "width": 200,
+        }
+      }
+      validators="required"
+    />
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="email"
+      placeholderTextColor="#800080"
+      returnKeyType="go"
+      style={
+        Object {
+          "backgroundColor": "#E0FFFF",
+          "color": "#C71585",
+          "height": 40,
+          "marginBottom": 20,
+          "paddingHorizontal": 10,
+          "textAlign": "center",
+          "width": 200,
+        }
+      }
+      validators="required"
+    />
+    <View
+      accessibilityComponentType="button"
+      accessibilityLabel={undefined}
+      accessibilityTraits={
+        Array [
+          "button",
+        ]
+      }
+      accessible={true}
+      collapsable={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Pick image
+        </Text>
+      </View>
+    </View>
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#C71585",
+          "opacity": 1,
+          "paddingVertical": 15,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        disabled={false}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#000000",
+            "fontWeight": "700",
+            "textAlign": "center",
+          }
+        }
+      >
+        Submit
+      </Text>
+    </View>
+    <View
+      accessibilityComponentType="button"
+      accessibilityLabel={undefined}
+      accessibilityTraits={
+        Array [
+          "button",
+        ]
+      }
+      accessible={true}
+      collapsable={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          disabled={false}
+          ellipsizeMode="tail"
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Go back to Login
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;

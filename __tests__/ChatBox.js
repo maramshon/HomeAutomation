@@ -1,13 +1,14 @@
 import 'react-native';
 import React from 'react';
-import App from '../App';
+import ChatBox from '../src/routes/ChatBox';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 test('Search snapshot test', () => {
-  const component = renderer.create(<App />)
+  const component = renderer.create(<ChatBox />)
   const tree = component.toJSON()
   expect(tree).toMatchSnapshot();
 })
+
 
